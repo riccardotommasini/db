@@ -1,5 +1,18 @@
-tmp
-tmp/*
-pgdata
-pgdata/*
+# PostgreSQL data
+pgdata/
 *.log
+
+# pgAdmin data
+pgadmin-data/
+
+# Docker
+.env
+docker-compose.override.yml
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

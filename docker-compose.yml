@@ -1,41 +1,47 @@
 services:
-
-  app:
+  workspace:
     build: .
-    command: tail -f /dev/null 
+    command: sleep infinity
     volumes:
       - ./:/workspace:cached
-
-  pgadmin:
-    image: dpage/pgadmin4:8.9
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: devteds@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: devteds      
-      PGADMIN_CONFIG_WTF_CSRF_HEADERS: '["Referer", "Origin"]'
-      PGADMIN_CONFIG_WTF_CSRF_ENABLED: 'False'
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - 5050:80
     depends_on:
       - db
+      - pgadmin
 
   db:
-    image: postgres:12.19
-    restart: always          
-    environment: 
+    image: postgres:15
+    restart: always
+    environment:
       POSTGRES_USER: devtedsuser
       POSTGRES_PASSWORD: devtedspass
       POSTGRES_DB: demodb
-    volumes:                 
+    volumes:
       - pg-data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devtedsuser -d demodb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-    # POSTGRES_HOST_AUTH_METHOD: "trust"
-    # PGHBA_CONF_CONTENT: |
-    #   host    all             all             0.0.0.0/0               md5    
-    # - ./pgdata:/var/lib/postgresql/data
-      # host    all             all             0.0.0.0/0               trust
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@interview.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    ports:
+      - "5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   pgadmin-data:
