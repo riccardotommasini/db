@@ -1,8 +1,12 @@
 {
   "name": "PostgreSQL Interview Environment",
-  "dockerComposeFile": "../docker-compose.yml",
-  "service": "workspace",
-  "workspaceFolder": "/workspace",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/postgresql:1": {
+      "version": "15"
+    }
+  },
   "forwardPorts": [5432, 5050],
   "portsAttributes": {
     "5050": {
@@ -13,7 +17,7 @@
       "label": "PostgreSQL"
     }
   },
-  "postCreateCommand": "sleep 10 && docker-compose exec -T db psql -U devtedsuser -d demodb -f /docker-entrypoint-initdb.d/init.sql",
+  "postCreateCommand": "docker compose up -d",
   "customizations": {
     "vscode": {
       "extensions": [
