@@ -13,16 +13,12 @@
       "label": "PostgreSQL"
     }
   },
-  "remoteUser": "vscode",
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-azuretools.vscode-docker",
         "ms-ossdata.vscode-postgresql"
-      ],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
+      ]
     }
   }
 }
