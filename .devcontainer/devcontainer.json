@@ -1,12 +1,8 @@
 {
   "name": "PostgreSQL Interview Environment",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/postgresql:1": {
-      "version": "15"
-    }
-  },
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspace",
   "forwardPorts": [5432, 5050],
   "portsAttributes": {
     "5050": {
@@ -17,13 +13,16 @@
       "label": "PostgreSQL"
     }
   },
-  "postCreateCommand": "docker compose up -d",
+  "remoteUser": "vscode",
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-azuretools.vscode-docker",
         "ms-ossdata.vscode-postgresql"
-      ]
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
   }
 }
