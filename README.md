@@ -12,7 +12,7 @@ A complete PostgreSQL + pgAdmin setup for GitHub Codespaces, designed for databa
 
 ## Database Details
 
-- **Host**: db (internal) or localhost (external)
+- **Host**: db (the whole environment runs in docker) or localhost (external)
 - **Port**: 5432
 - **Database**: demodb
 - **Username**: devtedsuser

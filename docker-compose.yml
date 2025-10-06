@@ -13,9 +13,12 @@ services:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: devtedsuser
-      POSTGRES_PASSWORD: devtedspass
-      POSTGRES_DB: demodb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER} # for the psql client
+      PGPASSWORD: ${POSTGRES_PASSWORD} # for the psql client
+      PGDATABASE: ${POSTGRES_DB} # for the psql clie
     volumes:
       - pg-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
