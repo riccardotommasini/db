@@ -13,7 +13,10 @@
       "label": "PostgreSQL"
     }
   },
-  "postCreateCommand": "docker compose up -d",
+  "postCreateCommand": "echo 'Devcontainer created ✅'",
+
+  // Wait until dockerd is up, then compose up
+  "postStartCommand": "bash -lc 'until docker info >/dev/null 2>&1; do echo waiting for docker...; sleep 2; done; docker version; (docker compose version || docker-compose --version || true); docker compose pull || true; docker compose up -d'",
   "customizations": {
     "vscode": {
       "extensions": [
