@@ -27,7 +27,7 @@ ENV VENV_PATH=/opt/venv
 RUN python3 -m venv $VENV_PATH \
     && $VENV_PATH/bin/pip install --upgrade pip \
     && $VENV_PATH/bin/pip install --no-cache-dir \
-        jupyter ipykernel psycopg2 pandas\
+        jupyter ipykernel psycopg2-binary pandas\
     && $VENV_PATH/bin/python -m ipykernel install \
         --name=python3 \
         --display-name="Python 3 (container)"
