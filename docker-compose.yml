@@ -23,7 +23,7 @@ services:
       - pg-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U devtedsuser -d demodb"]
       interval: 10s
@@ -34,8 +34,8 @@ services:
     image: dpage/pgadmin4:latest
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@interview.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
       PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1
@@ -44,7 +44,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
       - ./pgadmin/servers.json:/pgadmin4/servers.json
     ports:
-      - "5050:80"
+      - "${PGADMIN_PORT}:80"
     depends_on:
       db:
         condition: service_healthy
