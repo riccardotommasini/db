@@ -13,19 +13,19 @@ services:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      PGUSER: ${POSTGRES_USER} # for the psql client
-      PGPASSWORD: ${POSTGRES_PASSWORD} # for the psql client
-      PGDATABASE: ${POSTGRES_DB} # for the psql clie
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: assignment
+      PGUSER: postgres # for the psql client
+      PGPASSWORD: postgres # for the psql client
+      PGDATABASE: assignment # for the psql clie
     volumes:
       - pg-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d assignment"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -34,8 +34,8 @@ services:
     image: dpage/pgadmin4:latest
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
       PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1
@@ -44,7 +44,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
       - ./pgadmin/servers.json:/pgadmin4/servers.json
     ports:
-      - "${PGADMIN_PORT}:80"
+      - "5050:80"
     depends_on:
       db:
         condition: service_healthy
