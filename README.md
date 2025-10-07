@@ -7,7 +7,7 @@ A complete PostgreSQL + pgAdmin setup for GitHub Codespaces, designed for databa
 1. Open this repository in GitHub Codespaces
 2. Wait for the containers to start (about 2-3 minutes)
 3. Access pgAdmin at the forwarded port 5050
-4. Login with: `admin@interview.com` / `admin123`
+4. Login with: `admin@postgres.com` / `postgres`
 5. The database connection is pre-configured
 
 ## Database Details
